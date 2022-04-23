@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/style.css}">
+    <title>Doctor Appointment</title>
+  </head>
+  <body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload="">
+  	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="/">DoctorAppointment</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active" style="padding-right: 40px;">
+						<a class="nav-link" href="/addAppointment">
+							Add New Appointment
+						</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="#" 
+							style="color: yellow;letter-spacing: 2px"
+							th:text="${patient.getPatientEmail()}">
+						</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/logout" id="logout">
+							<i class="fa fa-sign-out" aria-hidden="true"></i>
+							Logout
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<main class="mContainer">
+		<div class="container py-5">
+			<div class="row py-2">
+				<div class="col-md-12 text-center">
+					<h3>Patient Dashboard</h3>
+				</div>
+			</div>
+			<div class="row pb-5" th:each="n: ${appointment}">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+				
+				
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">
+									<b>Doctor Name : </b><span th:text="${n.value}"></span>
+								</h5>
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<b>Patient Name : </b><span th:text="${n.key.appointmentName}"></span>
+								</li>
+								<li class="list-group-item">
+									<b>Patient Email : </b><span th:text="${n.key.appointmentEmail}"></span>
+								</li>
+								<li class="list-group-item">
+									<b>Patient Age : </b><span th:text="${n.key.appointmentAge}"></span>
+								</li>
+								<li class="list-group-item">
+									<b>Patient Gender : </b><span th:text="${n.key.appointmentGender}"></span>
+								</li>
+								<li class="list-group-item">
+									<b>Appointment Purpose : </b><span th:text="${n.key.appointmentPurpose}"></span>
+								</li>
+								<li class="list-group-item">
+									<b>Appointment Date & Time : </b><span th:text="${n.key.appointmentDateTime}"></span>
+								</li>
+								<li class="list-group-item">
+									<b>Patient Address : </b><span th:text="${n.key.appointmentAddress}"></span>
+								</li>
+							</ul>
+							<div class="card-body">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-6 py-1 text-center">
+											<form method="post" th:action="@{/editAppointmentBtn}"
+												style="display: inline">
+												<input type="number" th:name="appointmentId"
+													th:value="${n.key.appointmentId}" style="display: none">
+												<button class="btn btn-warning card-link">Edit
+													Appointment</button>
+											</form>
+										</div>
+										<div class="col-sm-6 py-1 text-center">
+											<form method="post" th:action="@{/deleteAppointment}" style="display : inline">
+												<input type="number" th:name="appointmentId"
+													th:value="${n.key.appointmentId}" style="display : none">
+												<button class="btn btn-danger card-link" id="deleteAppointment">Delete Appointment</button>	
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+				</div>
+				<div class="col-md-3"></div>		
+			</div>
+		</div>
+	</main>
+  
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script src="js/script.js" th:src="@{/js/script.js}"></script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  
+  </body>
+</html>
